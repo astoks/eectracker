@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EEC Investment: Chinese Capital in Thailand's Eastern Economic Corridor</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #ffffff;
+    --bg2:      #f7f6f2;
+    --bg3:      #f0ede6;
+    --text:     #1a1a18;
+    --text2:    #5a5a56;
+    --text3:    #8a8a84;
+    --border:   rgba(0,0,0,0.10);
+    --border2:  rgba(0,0,0,0.06);
+    --green:    #1D9E75;
+    --green2:   #5DCAA5;
+    --amber:    #EF9F27;
+    --purple:   #534AB7;
+    --blue:     #378ADD;
+    --blue2:    #85B7EB;
+    --slate:    #888780;
+    --teal2:    #9FE1CB;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:     #1c1c1a;
+      --bg2:    #252523;
+      --bg3:    #2e2e2b;
+      --text:   #e8e6df;
+      --text2:  #a8a8a0;
+      --text3:  #6a6a64;
+      --border: rgba(255,255,255,0.10);
+      --border2:rgba(255,255,255,0.06);
+    }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 2rem 1rem 3rem;
+  }
+
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .hed {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: .5rem;
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: .5rem;
+    color: var(--text);
+  }
+
+  .dek {
+    font-size: 15px;
+    color: var(--text2);
+    margin-bottom: 1.5rem;
+    max-width: 640px;
+    line-height: 1.55;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    margin-bottom: 1.25rem;
+    font-size: 12.5px;
+    color: var(--text2);
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .swatch {
+    width: 11px; height: 11px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* Tab row */
+  .tab-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1.25rem;
+  }
+  .tab-btn {
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    color: var(--text2);
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: background .12s, color .12s;
+    font-family: inherit;
+  }
+  .tab-btn:hover { background: var(--bg3); }
+  .tab-btn.active {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  /* Chart container */
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    transition: height .2s ease;
+  }
+
+  /* Note box */
+  .note {
+    background: var(--bg2);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 6px 6px 0;
+    padding: .65rem 1rem;
+    font-size: 12.5px;
+    color: var(--text2);
+    margin: 1.25rem 0;
+    line-height: 1.5;
+  }
+  .note strong { color: var(--text); font-weight: 600; }
+
+  /* Source line */
+  .source {
+    font-size: 11.5px;
+    color: var(--text3);
+    margin-top: 1rem;
+    line-height: 1.5;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--border2);
+    margin: 2rem 0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hed">Sinocities · Thailand · EEC Investment Tracker</div>
+  <h1>Chinese capital and foreign investment in Thailand's Eastern Economic Corridor</h1>
+  <p class="dek">Selected announced or BOI-approved investments, 2020–2026. Chinese-origin operators dominate EV assembly and battery supply chain; Western hyperscalers lead data center infrastructure by total committed capital.</p>
+
+  <div class="legend">
+    <div class="legend-item"><span class="swatch" style="background:var(--green)"></span>Chinese EV assembly</div>
+    <div class="legend-item"><span class="swatch" style="background:var(--amber)"></span>Chinese battery / supply chain</div>
+    <div class="legend-item"><span class="swatch" style="background:var(--purple)"></span>Chinese-origin data centers</div>
+    <div class="legend-item"><span class="swatch" style="background:var(--blue)"></span>Western hyperscalers (DC)</div>
+    <div class="legend-item"><span class="swatch" style="background:var(--blue2)"></span>Mixed / ambiguous origin (DC)</div>
+    <div class="legend-item"><span class="swatch" style="background:var(--green2)"></span>EV assembly (JV / mixed)</div>
+    <div class="legend-item"><span class="swatch" style="background:var(--slate)"></span>Thai conglomerate (DC)</div>
+    <div class="legend-item"><span class="swatch" style="background:var(--teal2)"></span>Other foreign (DC)</div>
+  </div>
+
+  <div class="tab-row">
+    <button class="tab-btn active" onclick="switchTab('all',this)">All sectors</button>
+    <button class="tab-btn" onclick="switchTab('dc',this)">Data centers</button>
+    <button class="tab-btn" onclick="switchTab('ev',this)">EV &amp; battery</button>
+    <button class="tab-btn" onclick="switchTab('cn',this)">Chinese-origin only</button>
+  </div>
+
+  <div class="chart-wrap" style="height:540px">
+    <canvas id="chart" role="img" aria-label="Horizontal bar chart of selected investments in Thailand's EEC. AWS leads at US$5B, followed by True IDC at US$2.2B, Haoyang Data at US$2.16B. Full data in surrounding text.">Investment data for EEC Thailand. See surrounding text for figures.</canvas>
+  </div>
+
+  <div class="note">
+    <strong>Note on TikTok:</strong> TikTok (ByteDance) received BOI approval in May 2026 for 842 billion baht (~US$25.5B) — the largest single BOI approval in Thailand's history. This figure is excluded from the chart because TikTok does not build or operate its own data centers; the commitment represents workload deployment contracted across existing operator infrastructure (including True IDC, AWS, and others already shown). Including it would double-count supply-side capacity already captured above.
+  </div>
+
+  <div class="source">
+    Sources: BOI press releases (2022–2026); AWS press center (Jan 2025); company announcements; Data Center Dynamics; Nikkei Asia; Reuters; PR Newswire.<br>
+    BYD figure: 35 billion baht total plant investment (~US$0.98B). Sunwoda: US$1B+ BOI-approved battery cell and pack investment (PR Newswire / BOI, 2025). True IDC: 77 billion baht BOI promotion package (~US$2.2B). Bridge DC: two separate BOI-approved Chonburi projects totalling ~US$1.95B (Bain Capital; Chinese-origin operator). Skyline DC: DAMAC Group (UAE), US$1.4B, 200MW, Chachoengsao. All figures approximate; exchange rates vary.
+  </div>
+
+  <hr>
+  <p class="source">Chart by Sinocities. Data compiled from public BOI records and company announcements. For methodology notes contact the author.</p>
+
+</div>
+
+<script>
+const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const gridC  = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.07)';
+const txtC   = isDark ? '#a8a8a0' : '#5a5a56';
+
+// [label, value, color, tags]
+const rows = [
+  ['AWS — Asia Pacific Thailand',         5.00, '#378ADD', ['all','dc','west']],
+  ['True IDC (CP Group) — 250MW EEC',     2.20, '#888780', ['all','dc']],
+  ['Haoyang Data — 300MW Rayong',         2.16, '#534AB7', ['all','dc','cn']],
+  ['Skyline DC (DAMAC) — 200MW Chachoengsao', 1.40, '#9FE1CB', ['all','dc']],
+  ['Bridge DC (Bain/CN) — 200MW Chonburi',1.20, '#85B7EB', ['all','dc']],
+  ['Sunwoda — battery cells & packs',     1.00, '#EF9F27', ['all','ev','cn']],
+  ['Galaxy DC / Hoyinn — 1GW Rayong',     1.00, '#534AB7', ['all','dc','cn']],
+  ['DayOne / GDS — Chonburi campus',      1.00, '#534AB7', ['all','dc','cn']],
+  ['Microsoft — cloud & AI region',       1.00, '#378ADD', ['all','dc','west']],
+  ['Google — Bangkok + Chonburi',         1.00, '#378ADD', ['all','dc','west']],
+  ['BYD — EV assembly Rayong',            0.98, '#1D9E75', ['all','ev','cn']],
+  ['Bridge DC (Bain/CN) — 134MW Chonburi',0.75, '#85B7EB', ['all','dc']],
+  ['CATL–Arun Plus — battery JV',         0.60, '#EF9F27', ['all','ev','cn']],
+  ["Chang'an — EV assembly Rayong",       0.45, '#1D9E75', ['all','ev','cn']],
+  ['Great Wall Motor — Rayong',           0.35, '#1D9E75', ['all','ev','cn']],
+  ['SAIC-CP / MG — Chonburi',             0.30, '#5DCAA5', ['all','ev','cn']],
+  ['EVE Energy — battery cells',          0.25, '#EF9F27', ['all','ev','cn']],
+].sort((a,b) => b[1]-a[1]);
+
+let chart = null;
+
+function buildChart(tag) {
+  if (chart) chart.destroy();
+  const filtered = rows.filter(r => r[3].includes(tag));
+  const labels = filtered.map(r => r[0]);
+  const vals   = filtered.map(r => r[1]);
+  const colors = filtered.map(r => r[2]);
+  const h = Math.max(300, filtered.length * 40 + 70);
+  document.querySelector('.chart-wrap').style.height = h + 'px';
+
+  chart = new Chart(document.getElementById('chart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        data: vals,
+        backgroundColor: colors,
+        borderRadius: 4,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => '  US$' + ctx.parsed.x.toFixed(2) + 'B (approx.)'
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: gridC },
+          ticks: {
+            color: txtC,
+            font: { size: 12 },
+            callback: v => 'US$' + v + 'B'
+          }
+        },
+        y: {
+          grid: { display: false },
+          ticks: {
+            color: txtC,
+            font: { size: 12 },
+            autoSkip: false
+          }
+        }
+      }
+    }
+  });
+}
+
+function switchTab(tag, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildChart(tag);
+}
+
+buildChart('all');
+</script>
+</body>
+</html>
